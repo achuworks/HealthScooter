@@ -1,0 +1,52 @@
+body {
+    background: url('tech.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Arial', sans-serif;
+}
+
+.glassmorphism {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.input-field {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+.sign-up{
+    display: flex;
+    flex-direction: column;
+    gap:1em;
+    margin-top: 1em;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    font-size: 18px;
+}
+.socials{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    color:white;
+}
+
+.socials i {
+    padding: 10px;
+    border-radius: 50%;
+    border: 2px solid white;
+    font-size: 24px;
+    transition: 0.3 ease-in-out;
+    cursor: pointer;
+}
+
+.socials i:hover {
+    background-color: white;
+    color: black;
+}

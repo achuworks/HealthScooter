@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Information Form</title>
+    <link rel="stylesheet" href="info.css">
+    <link rel="icon" href="logo.png">
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Patient Information Form</h1>
+        <form id="patientForm">
+            <fieldset>
+                <legend>Personal Information</legend>
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+                
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+                
+                <label for="emergencyContact">Emergency Contact:</label>
+                <input type="text" id="emergencyContact" name="emergencyContact" required>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Medical History</legend>
+                <label for="pastConditions">Past Medical Conditions:</label>
+                <textarea id="pastConditions" name="pastConditions"></textarea>
+                
+                <label for="surgicalHistory">Surgical History:</label>
+                <div class="radio-group">
+                    <label for="surgeryYes">
+                        <input type="radio" id="surgeryYes" name="surgicalHistory" value="yes" required> Yes
+                    </label>
+                    <label for="surgeryNo">
+                        <input type="radio" id="surgeryNo" name="surgicalHistory" value="no" required> No
+                    </label>
+                </div>
+                
+                <label for="currentMedications">Current Medications:</label>
+                <textarea id="currentMedications" name="currentMedications"></textarea>
+                
+                <label for="allergies">Allergies:</label>
+                <div class="radio-group">
+                    <label for="allergiesYes">
+                        <input type="radio" id="allergiesYes" name="allergies" value="yes" required> Yes
+                    </label>
+                    <label for="allergiesNo">
+                        <input type="radio" id="allergiesNo" name="allergies" value="no" required> No
+                    </label>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Insurance Information</legend>
+                <label for="insuranceProvider">Provider:</label>
+                <input type="text" id="insuranceProvider" name="insuranceProvider">
+                
+                <label for="policyNumber">Policy Number:</label>
+                <input type="text" id="policyNumber" name="policyNumber">
+                
+                <label for="groupNumber">Group Number:</label>
+                <input type="text" id="groupNumber" name="groupNumber">
+                
+                <label for="primaryInsured">Primary Insured Person:</label>
+                <input type="text" id="primaryInsured" name="primaryInsured">
+            </fieldset>
+            
+            <fieldset>
+                <legend>Lifestyle Information</legend>
+                <label for="smokingStatus">Smoking Status:</label>
+                <textarea id="smokingStatus" name="smokingStatus"></textarea>
+                
+                <label for="alcohol">Alcohol Use:</label>
+                <textarea id="alcohol" name="alcohol"></textarea>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Current Health Concerns</legend>
+                <label for="symptoms">Symptoms:</label>
+                <textarea id="symptoms" name="symptoms"></textarea>
+                
+                <label for="duration">Duration of Symptoms:</label>
+                <textarea id="duration" name="duration"></textarea>
+                
+                <label for="severity">Severity of Symptoms:</label>
+                <textarea id="severity" name="severity"></textarea>
+                
+                <label for="previousTreatment">Previous Treatment Tried:</label>
+                <textarea id="previousTreatment" name="previousTreatment"></textarea>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Vitals & Physical Exam</legend>
+                <label for="height">Height:</label>
+                <input type="text" id="height" name="height">
+                
+                <label for="weight">Weight:</label>
+                <input type="text" id="weight" name="weight">
+                
+                <label for="bloodPressure">Blood Pressure:</label>
+                <input type="text" id="bloodPressure" name="bloodPressure">
+                
+                <label for="heartRate">Heart Rate:</label>
+                <input type="text" id="heartRate" name="heartRate">
+                
+                <label for="temperature">Body Temperature:</label>
+                <input type="text" id="temperature" name="temperature">
+                
+                <label for="respiratoryRate">Respiratory Rate:</label>
+                <input type="text" id="respiratoryRate" name="respiratoryRate">
+            </fieldset>
+            
+            <button type="submit" style="background-color: rgb(33, 188, 152);">Submit</button>
+        </form>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCYXDKz7XFWN0t6SvemNWk2aJjIMKfO_w",
+            authDomain: "health-scooter-4f860.firebaseapp.com",
+            projectId: "health-scooter-4f860",
+            storageBucket: "health-scooter-4f860.appspot.com",
+            messagingSenderId: "988109390176",
+            appId: "1:988109390176:web:6ce9ca8ea70a5252555e05",
+            measurementId: "G-GVHXLPRDZG"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Form submission handler
+        document.getElementById('patientForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const data = {
+                name: form.name.value,
+                age: form.age.value,
+                gender: form.gender.value,
+                phone: form.phone.value,
+                emergencyContact: form.emergencyContact.value,
+                pastConditions: form.pastConditions.value,
+                surgicalHistory: form.surgicalHistory.value,
+                currentMedications: form.currentMedications.value,
+                allergies: form.allergies.value,
+                insuranceProvider: form.insuranceProvider.value,
+                policyNumber: form.policyNumber.value,
+                groupNumber: form.groupNumber.value,
+                primaryInsured: form.primaryInsured.value,
+                smokingStatus: form.smokingStatus.value,
+                alcohol: form.alcohol.value,
+                symptoms: form.symptoms.value,
+                duration: form.duration.value,
+                severity: form.severity.value,
+                previousTreatment: form.previousTreatment.value,
+                height: form.height.value,
+                weight: form.weight.value,
+                bloodPressure: form.bloodPressure.value,
+                heartRate: form.heartRate.value,
+                temperature: form.temperature.value,
+                respiratoryRate: form.respiratoryRate.value
+            };
+
+            try {
+                const docRef = doc(db, "patients", form.name.value);
+                await setDoc(docRef, data);
+                alert('Patient information submitted successfully');
+                form.reset();
+            } catch (error) {
+                console.error('Error writing document: ', error);
+                alert('Error submitting form, please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

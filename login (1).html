@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Scooter Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="logo.png">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body class="flex items-center justify-center min-h-screen">
+    <div class="glassmorphism p-8 max-w-sm w-full">
+        <h1 class="text-3xl font-bold mb-6 text-center text-white">Health Scooter</h1>
+        <form action="#" method="post">
+            <div class="mb-4">
+                <label for="email" class="block text-white mb-2">Email</label>
+                <input type="email" id="email" name="email" required class="input-field w-full p-2 rounded">
+            </div>
+            <div class="mb-6">
+                <label for="password" class="block text-white mb-2">Password</label>
+                <input type="password" id="password" name="password" required class="input-field w-full p-2 rounded">
+            </div>
+            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
+            </form>
+            <form action="#"></form>
+              <div class="sign-up" style="color: white;">
+                  <span>Or sign up using</span>
+                  <div class="socials">
+                      <button id="google">
+                      <i class="fa fa-google"></i>
+                      </button>
+                      <i class="fa fa-windows"></i>
+                      <button id="git">
+                        <i class="fa fa-twitter"></i>
+                      </button>
+                  </div>
+              </div>
+    </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyCCYXDKz7XFWN0t6SvemNWk2aJjIMKfO_w",
+          authDomain: "health-scooter-4f860.firebaseapp.com",
+          projectId: "health-scooter-4f860",
+          storageBucket: "health-scooter-4f860.appspot.com",
+          messagingSenderId: "988109390176",
+          appId: "1:988109390176:web:6ce9ca8ea70a5252555e05",
+          measurementId: "G-GVHXLPRDZG"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        import { getAuth ,GoogleAuthProvider ,signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        const auth = getAuth(app);
+        auth.languageCode = 'en'
+        const provider1 = new GoogleAuthProvider();  
+
+
+        const googleLogin = document.getElementById("google");
+        googleLogin.addEventListener("click", function(){
+          signInWithPopup(auth,provider1)
+          .then((result) => {
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const user = result.user;
+            console.log(user);
+            window.location.href = "hs.html";
+          }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+          });
+        })
+
+      </script>
+</body>
+</html>
